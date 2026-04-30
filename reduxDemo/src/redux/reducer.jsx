@@ -7,19 +7,22 @@ export const todoreducer=(state=initialstate,action)=>{
         case "ADD_TODO":
             return{
             ...state,
-            todo:[...state.todo,action.payload]
-            }
+            todos: [...state.todo,{id:Date.now(),text:action.payload,completed:false}]
+            };
 
         case "DELETE_TODO":
             return{
             ...state,
-            id:acton.payload
-            }
+            todos: state.todos.filter(todo=> todo.id!==action.payload)
+            };
 
 
         case "TOGGLE":
             return{
             ...state,
-            }
+            todos:state.todos.map(todo=>
+                todo.id
+            )
+        }
     }
 }
