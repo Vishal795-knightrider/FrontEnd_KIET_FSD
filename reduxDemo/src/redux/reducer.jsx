@@ -21,8 +21,11 @@ export const todoreducer=(state=initialstate,action)=>{
             return{
             ...state,
             todos:state.todos.map(todo=>
-                todo.id
-            )
+                todo.id===action.payload ? {...todo,compeleted: !todo.completed} : todo)
         }
+        default:
+            return state
     }
 }
+
+export default reducer;
