@@ -1,13 +1,13 @@
-import './App.css'
-import Todo from './components/todo' 
+import todo from './components/todo.jsx'
 
-function App() {
-  return (
-    <>
-      <h1>TODO APP with redux</h1>
-      <Todo /> 
-    </>
-  )
+export default function App()
+{
+    return(
+        <div>
+            <h1>
+                TODO APP With Redux
+            </h1>
+            <todo/>
+        </div>
+    )
 }
-
-export default App;

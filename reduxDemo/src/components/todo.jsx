@@ -1,50 +1,30 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addtodo, deletetodo, toogle } from "../redux/action";
+import { useSelector, useDispatch } from "react-redux";
+import { addTodo, deleteTodo, toggleTodo } from "./redux/actions";
+import { useState } from "react";
 
-const Todo = () => {
-  const todos = useSelector(state => state.todos); 
-
-
+function Todo() {
+  const [text, setText] = useState("");
+  const todos = useSelector(state => state.todos);
   const dispatch = useDispatch();
-  const [input, setInput] = useState('');
-
-  const handleAdd = () => {
-    if (input.trim()) {
-      dispatch(addtodo(input)); 
-      
-      setInput('');
-    }
-  };
-
-  const handleDelete = (id) => {
-    dispatch(deletetodo(id)); 
-  };
-
-  const handleToggle = (id) => {
-    dispatch(toogle(id)); 
-  };
 
   return (
     <div>
-      <input 
-        type="text" 
-        value={input} 
-        onChange={(e) => setInput(e.target.value)} 
-        placeholder="Add a new todo"
-      />
-      <button onClick={handleAdd}>Add Todo</button>
-      <ul>
-        {todos.map(todo => (
-          <li key={todo.id} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={() => dispatch(addTodo(text))}>Add</button>
+
+      {todos.map(todo => (
+        <div key={todo.id}>
+          <span
+            onClick={() => dispatch(toggleTodo(todo.id))}
+            style={{ textDecoration: todo.completed ? "line-through" : "none", cursor: "pointer" }}
+          >
             {todo.text}
-            <button onClick={() => handleToggle(todo.id)}>Toggle</button>
-            <button onClick={() => handleDelete(todo.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+          </span>
+          <button onClick={() => dispatch(deleteTodo(todo.id))}>X</button>
+        </div>
+      ))}
     </div>
   );
-};
+}
 
 export default Todo;
