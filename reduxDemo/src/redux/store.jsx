@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
-import todoreducer from './reducer'; 
+import {createStore} from 'redux';
 
-export const store = createStore(todoreducer);
+import { todoreducer} from './reducer';
+
+export const store=createStore(todoreducer);

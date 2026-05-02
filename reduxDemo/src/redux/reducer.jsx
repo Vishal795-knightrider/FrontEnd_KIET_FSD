@@ -1,41 +1,32 @@
-const initialstate = {
-    todos: [] 
-    // FIX: todo -> todos (same naming everywhere)
+import{createSlice} from '@reduxjs/toolkit'
+
+const initialState = {
+  todos: []
 };
+//Traditional Redux
+export const todoReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "ADD_TODO":
+      return {
+        ...state,
+        todos: [...state.todos, { id: Date.now(), text: action.payload, completed: false }]
+      };
 
-export const todoreducer = (state = initialstate, action) => {
-    switch (action.type) {
+    case "DELETE_TODO":
+      return {
+        ...state,
+        todos: state.todos.filter(todo => todo.id !== action.payload)
+      };
 
-        case "ADD_TODO":
-            return {
-                ...state,
-                todos: [...state.todos, { 
-                    id: Date.now(), 
-                    text: action.payload, 
-                    completed: false 
-                }]
-                // FIX: state.todo -> state.todos
-            };
+    case "TOGGLE_TODO":
+      return {
+        ...state,
+        todos: state.todos.map(todo =>
+          todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
+        )
+      };
 
-        case "DELETE_TODO":
-            return {
-                ...state,
-                todos: state.todos.filter(todo => todo.id !== action.payload)
-            };
-
-        case "TOGGLE":
-            return {
-                ...state,
-                todos: state.todos.map(todo =>
-                    todo.id === action.payload
-                        ? { ...todo, completed: !todo.completed }
-                        : todo
-                )
-            };
-
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 };
-
-export default todoreducer; 
